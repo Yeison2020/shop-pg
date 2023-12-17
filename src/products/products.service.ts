@@ -1,8 +1,10 @@
+import tracer from 'dd-trace';
 import {
   BadRequestException,
   Injectable,
   InternalServerErrorException,
   Logger,
+  NotFoundException,
 } from '@nestjs/common';
 import { CreateProductDto } from './dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
@@ -28,20 +30,27 @@ export class ProductsService {
     }
   }
 
-  findAll() {
-    return `This action returns all products`;
+  //TODO: Paginated return
+  async findAll() {
+    return this.productRepository.find({});
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} product`;
+  async findOne(id: string) {
+    const product = await this.productRepository.findOneBy({ id });
+    if (!product)
+      throw new NotFoundException(`Product with ID ${id} not found`);
+
+    return product;
   }
 
   update(id: number, updateProductDto: UpdateProductDto) {
     return `This action updates a #${id} product`;
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} product`;
+  async remove(id: string) {
+    // Using this to target my method findOne available above
+    const product = await this.findOne(id);
+    await this.productRepository.remove(product);
   }
 
   // Private methods
@@ -52,7 +61,7 @@ export class ProductsService {
     }
     this.logger.error(error);
     throw new InternalServerErrorException(
-      'Unexpected error check server logs',
+      `Unexpected error check server logs: ${error.colums} and ${error.dataType}`,
     );
   }
 }

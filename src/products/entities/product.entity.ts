@@ -1,4 +1,10 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  BeforeInsert,
+  BeforeUpdate,
+  Column,
+  Entity,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 
 // Reprensention of my DB table
 @Entity()
@@ -44,4 +50,19 @@ export class Product {
   // tags
 
   // Images
+
+  // Before Insert to DB
+  @BeforeInsert()
+  checkSlugInsert() {
+    if (!this.slug) {
+      this.slug = this.title;
+    }
+    this.slug = this.slug
+      .toLocaleLowerCase()
+      .replaceAll("'", '')
+      .replaceAll(' ', '_');
+  }
+
+  // After Insert to DB
+  //@BeforeUpdate()
 }
