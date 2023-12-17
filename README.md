@@ -4,14 +4,18 @@
 
 # Shop PG API
 
-1- Start DB and APP
+1. Clone project
+2. `yarn install`
+3. Clone file `.env.template` and rename to `.env`
+4. Add db credentials within `.env`
+5. Start or Stop DB container
 
 ```
 docker-compose up -d
 ```
 
-Stop DB and APP
-
 ```
 docker-compose down
 ```
+
+6. Start app: `yarn start:dev`
