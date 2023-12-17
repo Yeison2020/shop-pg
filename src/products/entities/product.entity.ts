@@ -26,6 +26,7 @@ export class Product {
     unique: true,
   })
   slug: string;
+
   @Column('int', {
     default: 0,
   })
