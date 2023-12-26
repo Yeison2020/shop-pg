@@ -1,4 +1,3 @@
-import tracer from 'dd-trace';
 import {
   BadRequestException,
   Injectable,
@@ -11,6 +10,9 @@ import { UpdateProductDto } from './dto/update-product.dto';
 import { Product } from './entities/product.entity';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
+import { PaginationDto } from 'src/common/dtos/pagination.dto';
+import { validate as IsUUID } from 'uuid';
+import { isUUID } from 'class-validator';
 
 @Injectable()
 export class ProductsService {
@@ -31,14 +33,34 @@ export class ProductsService {
   }
 
   //TODO: Paginated return
-  async findAll() {
-    return this.productRepository.find({});
+  async findAll(pagination: PaginationDto) {
+    const { limit = 10, offset = 0 } = pagination;
+    return this.productRepository.find({
+      take: limit,
+      skip: offset,
+      // TODO Relations
+    });
   }
 
-  async findOne(id: string) {
-    const product = await this.productRepository.findOneBy({ id });
+  async findOne(term: string) {
+    let product: Product;
+    if (isUUID(term)) {
+      product = await this.productRepository.findOneBy({ id: term });
+    } else {
+      // This help prevents SQL injections and allows to fetch using both slug and title
+      const queryBuilder = this.productRepository.createQueryBuilder();
+
+      product = await queryBuilder
+        .where(`UPPER(title) =:title or slug =:slug`, {
+          title: term.toUpperCase(),
+          slug: term.toLocaleLowerCase(),
+        })
+        .getOne();
+    }
+
+    // const product = await this.productRepository.findOneBy({ id });
     if (!product)
-      throw new NotFoundException(`Product with ID ${id} not found`);
+      throw new NotFoundException(`Product with ID ${term} not found`);
 
     return product;
   }

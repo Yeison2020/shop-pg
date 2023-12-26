@@ -11,11 +11,4 @@ tracer.init({
   },
 });
 
-// tracer.use('express', {
-//   validateStatus: function (code) {
-//     if (code === 400) {
-//       return true;
-//     }
-//   },
-// });
 export default tracer;
