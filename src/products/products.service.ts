@@ -13,6 +13,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { PaginationDto } from 'src/common/dtos/pagination.dto';
 import { validate as IsUUID } from 'uuid';
 import { isUUID } from 'class-validator';
+import { error } from 'console';
 
 @Injectable()
 export class ProductsService {
@@ -65,8 +66,20 @@ export class ProductsService {
     return product;
   }
 
-  update(id: number, updateProductDto: UpdateProductDto) {
-    return `This action updates a #${id} product`;
+  async update(id: string, updateProductDto: UpdateProductDto) {
+    const product = await this.productRepository.preload({
+      id: id,
+      ...updateProductDto,
+    });
+
+    if (!product) throw new NotFoundException(`Product with ${id} not found`);
+
+    try {
+      await this.productRepository.save(product);
+      return product;
+    } catch (error) {
+      this.handleDBException(error);
+    }
   }
 
   async remove(id: string) {
@@ -81,7 +94,6 @@ export class ProductsService {
     if (error.code === `23505`) {
       throw new BadRequestException(error.detail);
     }
-    this.logger.error(error);
     throw new InternalServerErrorException(
       `Unexpected error check server logs: ${error.colums} and ${error.dataType}`,
     );

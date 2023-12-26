@@ -64,5 +64,11 @@ export class Product {
   }
 
   // After Insert to DB
-  //@BeforeUpdate()
+  @BeforeUpdate()
+  checkSlugUpdate() {
+    this.slug = this.slug
+      .toLocaleLowerCase()
+      .replaceAll("'", '')
+      .replaceAll(' ', '_');
+  }
 }
