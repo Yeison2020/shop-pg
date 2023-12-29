@@ -3,10 +3,12 @@ import {
   BeforeUpdate,
   Column,
   Entity,
+  OneToMany,
   PrimaryGeneratedColumn,
 } from 'typeorm';
+import { ProductImage } from './product-image.entity';
 
-// Reprensention of my DB table
+// Reprensention of my Product table
 @Entity()
 export class Product {
   @PrimaryGeneratedColumn('uuid')
@@ -56,6 +58,11 @@ export class Product {
   tags: string[];
 
   // Images
+  // Cascade delete all images with all products no recommended
+  @OneToMany(() => ProductImage, (productImage) => productImage.product, {
+    cascade: true,
+  })
+  images?: ProductImage[];
 
   // Before Insert to DB
   @BeforeInsert()
