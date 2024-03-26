@@ -8,14 +8,27 @@
 2. `yarn install`
 3. Clone file `.env.template` and rename to `.env`
 4. Add db credentials within `.env`
-5. Start or Stop DB container
+5. Start DB container
 
 ```
 docker-compose up -d
-```
 
 ```
-docker-compose down
+
+6. [Add tracing library](https://docs.datadoghq.com/tracing/trace_collection/automatic_instrumentation/dd_libraries/nodejs/)
+7. Configure tracer - Create a folder tracer in the root directoy of the app.
+
+```
+// tracer.ts
+import tracer from 'dd-trace';
+tracer.init({
+  env: 'dev',
+  service: 'shop-app',
+  port:'<APM agent port>'
+});
+
+export default tracer;
 ```
 
-6. Start app: `yarn start:dev`
+7. Start app: `yarn start`
+# shop-pg-apm
