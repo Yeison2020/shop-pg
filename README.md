@@ -25,7 +25,7 @@ docker-compose up -d
 ```
 
 6. [Add tracing library](https://docs.datadoghq.com/tracing/trace_collection/automatic_instrumentation/dd_libraries/nodejs/)
-7. [Configure tracer](https://docs.datadoghq.com/tracing/trace_collection/library_config/nodejs/#instrumentation) - Create a folder tracer in the root directoy of the app.
+7. [Configure tracer](https://docs.datadoghq.com/tracing/trace_collection/library_config/nodejs/#instrumentation) - Create a folder tracer in the root directoy of the app with th following:
 
 ```
 // tracer.ts
