@@ -1,4 +1,4 @@
-import '../tracer/tracer';
+// import '../tracer/tracer';
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';

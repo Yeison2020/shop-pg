@@ -1,9 +1,9 @@
-// tracer.ts
-import tracer from 'dd-trace';
-tracer.init({
-  env: 'dev',
-  service: 'shop-app',
-  port: '8136',
-});
+// // tracer.ts
+// import tracer from 'dd-trace';
+// tracer.init({
+//   env: 'dev',
+//   service: 'shop-app',
+//   port: 'APM_AGENT_PORT',
+// });
 
-export default tracer;
+// export default tracer;
