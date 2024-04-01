@@ -40,7 +40,7 @@ export default tracer;
 
 7. Start app: `yarn start`
 
-## NPM not found
+## Yarn not found
 
 ```
 source ~/.bashrc
