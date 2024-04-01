@@ -40,10 +40,46 @@ export default tracer;
 
 7. Start app: `yarn start`
 
+# Endpoints
+
+1. Get all products
+
+```
+curl http://localhost:3000/api/products
+```
+
+3. Get products by id
+
+```
+curl http://localhost:3000/api/products
+```
+
+4. Delete a products
+
+```
+curl  -X DELETE http://localhost:3000/api/products/<id>
+```
+
+5. Create a product
+
+http://localhost:3000/api/products
+
+```bash
+{
+ "title": "Full-Zip Hoodie",
+ "sizes":["MD", "LG", "XLG", "XXLG"],
+ "gender": "men",
+ "price": 32.00,
+ "slug": "A classic full-zip hoodie with elevated comfort"
+}
+
+```
+
 ## Yarn not found
 
 ```
 source ~/.bashrc
+
 ```
 
 ## Stack
