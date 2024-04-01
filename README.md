@@ -20,8 +20,7 @@ sh run.sh
 4. Spin up the DB container
 
 ```
-docker-compose up or docker-compose up -d to run containers in the background.
-
+docker-compose up or docker-compose up -d
 ```
 
 5. [Add tracing library](https://docs.datadoghq.com/tracing/trace_collection/automatic_instrumentation/dd_libraries/nodejs/)
@@ -45,5 +44,12 @@ export default tracer;
 
 ```
 source ~/.bashrc
-
 ```
+
+## Stack
+
+- MongoDB v5
+- Pg v10.0.2
+- NestJS v8.11.3
+- Express v4.17.13
+- Nodejs v18.15.11
